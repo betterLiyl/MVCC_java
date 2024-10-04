@@ -1,0 +1,37 @@
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+*.log
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### Eclipse ###
+/.metadata/
+
+### NetBeans ###
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+*/*.log
+.nb-gradle/
+
+### log files ###
+/log/*
+/logs/*
+logs
+
+### compile ###
+target/
+target
+!.mvn/wrapper/maven-wrapper.jar
+.flattened-pom.xml
