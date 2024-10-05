@@ -16,6 +16,7 @@ public class Mvcc {
 
     public Transaction begin_transaction() {
         Transaction txn = new Transaction();
+//        return txn.begin(kv.clone());
         return txn.begin(kv);
     }
 }

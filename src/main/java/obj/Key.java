@@ -2,7 +2,6 @@ package obj;
 
 import util.ProtostuffUtil;
 
-import java.util.List;
 
 /**
  * @Author: liyanlong
@@ -15,11 +14,27 @@ public class Key {
 
     private Long version;
 
-    public byte[] encode(Key key) {
-        return ProtostuffUtil.serializer(key);
+    public byte[] getRawKey() {
+        return rawKey;
     }
 
-    public Key decode(byte[] bytes) {
-        return ProtostuffUtil.deserializer(bytes, Key.class);
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setRawKey(byte[] rawKey) {
+        this.rawKey = rawKey;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
+
+    public Key() {
+    }
+
+    public Key(byte[] rawKey, Long version) {
+        this.rawKey = rawKey;
+        this.version = version;
     }
 }

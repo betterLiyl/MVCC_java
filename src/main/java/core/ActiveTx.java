@@ -1,6 +1,8 @@
 package core;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
@@ -9,8 +11,10 @@ import java.util.concurrent.locks.ReentrantLock;
  **/
 
 public class ActiveTx {
-
-    public static HashSet<Long> activeTx = new HashSet<>(16);
+    /**
+     * 当前活跃的事务 id，及其已经写入的 key 信息
+     */
+    public static HashMap<Long, List<byte[]>> activeTx = new HashMap<>(16);
 
     private static final ReentrantLock lock = new ReentrantLock();
 
@@ -18,6 +22,9 @@ public class ActiveTx {
         lock.lock();
     }
 
+    public static boolean isLock() {
+        return lock.isHeldByCurrentThread();
+    }
     public static void releaseLock() {
         lock.unlock();
     }

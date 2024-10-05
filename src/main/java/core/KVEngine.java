@@ -12,12 +12,27 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class KVEngine {
 
-    //Key-Value Engine define
-    //k : Key序列化
-    //v : Value序列化
-    public static final TreeMap<byte[], byte[]> KVEngine = new TreeMap<>(new Comparator<byte[]>() {
-        @Override
-        public int compare(byte[] b1, byte[] b2) {
+    private TreeMap<byte[], byte[]> engineData = initMap();
+
+    public TreeMap<byte[], byte[]> getEngineData() {
+        return engineData;
+    }
+
+    public KVEngine() {
+        new KVEngine(null);
+    }
+
+    public KVEngine(TreeMap<byte[], byte[]> engineData) {
+        //Key-Value Engine define
+        //k : Key序列化
+        //v : Value序列化
+        if (engineData != null) {
+            this.engineData = engineData;
+        }
+    }
+
+    public static TreeMap<byte[], byte[]> initMap() {
+        return new TreeMap<>((b1, b2) -> {
             // 先比较长度
             if (b1.length != b2.length) {
                 return Integer.compare(b1.length, b2.length);
@@ -30,21 +45,26 @@ public class KVEngine {
                 }
             }
             return 0; // 完全相同
-        }
-    });;
+        });
+    }
 
-    private final static ReentrantLock lock = new ReentrantLock();
 
-    public static void lock() {
+    private final ReentrantLock lock = new ReentrantLock();
+
+    public void lock() {
         lock.lock();
     }
-    public static void unlock() {
+
+    public boolean isLock() {
+        return lock.isLocked();
+    }
+
+    public void unlock() {
         lock.unlock();
     }
 
-//    @Override
-//    protected KVEngine clone() throws CloneNotSupportedException {
-//        Object clone = KVEngine.clone();
-//        return super.clone();
-//    }
+    @Override
+    public KVEngine clone() {
+        return new KVEngine((TreeMap<byte[], byte[]>) this.engineData.clone());
+    }
 }
